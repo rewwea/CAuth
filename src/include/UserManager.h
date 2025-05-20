@@ -1,33 +1,42 @@
-#pragma once
-#include <vector>
-#include <memory>
-#include "User.h"
-
-using namespace std;
-
 class UserManager {
     vector<shared_ptr<User>> users;
+    DatabaseManager& db;
 
 public:
-    void addUser(shared_ptr<User> user) {
-        users.push_back(user);
+    UserManager(DatabaseManager& db) : db(db) {
+        users = db.loadUsers();
     }
 
-    // TODO: пока что заглушка, просто проверяет логин и пароль как строки
-    bool auth(const string& login, const string& passwordHash) const {
+    bool registerUser(const string& login, const string& plainPassword, const string& role) {
+        shared_ptr<User> user;
+
+        if (role == "Admin")
+            user = make_shared<Admin>(login, plainPassword);
+        else if (role == "User")
+            user = make_shared<RegularUser>(login, plainPassword);
+        else
+            return false;
+
+        if (!db.saveUser(*user))
+            return false;
+
+        users.push_back(user);
+        return true;
+    }
+
+    bool auth(const string& login, const string& password) const {
         for (const auto& user : users) {
-            if (user->getLogin() == login && user->getPasswordHash() == passwordHash) {
+            if (user->getLogin() == login && user->auth(password))
                 return true;
-            }
         }
         return false;
     }
 
-    shared_ptr<User> findUser(const string& login) const {
+    bool hasAccess(const string& login, const string& resource) const {
         for (const auto& user : users) {
             if (user->getLogin() == login)
-                return user;
+                return user->hasAccess(resource);
         }
-        return nullptr;
+        return false;
     }
 };

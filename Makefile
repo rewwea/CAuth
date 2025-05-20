@@ -4,7 +4,7 @@
 
 # Compiler settings - Can be customized.
 CC = g++
-CXXFLAGS = -std=c++20 -Wall -I src/include
+CXXFLAGS = -std=c++20 -Wall -I src/include -I/opt/homebrew/opt/openssl/include
 LDFLAGS = -lsqlite3 -lssl -lcrypto
 
 # Makefile settings - Can be customized.
