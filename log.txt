@@ -1,0 +1,5 @@
+[INFO] Tue Jun  2 19:00:01 2025 - REGISTER alice (User) => SUCCESS
+[INFO] Tue Jun  2 19:00:02 2025 - LOGIN alice => SUCCESS
+[INFO] Tue Jun  2 19:00:03 2025 - ACCESS check for alice on home => GRANTED
+[INFO] Tue Jun  2 19:00:04 2025 - CHECK_ACCESS alice → DENIED
+[INFO] Tue Jun  2 19:00:05 2025 - REGISTER bob (Admin) => SUCCESS
