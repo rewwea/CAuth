@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include <iostream>
 #include <string>
+#include "User.h"
 
 using namespace std;
 

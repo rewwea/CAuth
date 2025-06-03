@@ -1,14 +1,11 @@
-#include <iostream>
-#include "UserManager.h"
 #include "DatabaseManager.h"
-
-using namespace std;
+#include "UserManager.h"
+#include "NetworkManager.h"
 
 int main() {
-    cout << "Auth Server Started." << endl;
-
     DatabaseManager db("auth.db");
-    UserManager manager;
-
+    UserManager manager(db);
+    NetworkManager network(manager);
+    network.start();
     return 0;
 }
